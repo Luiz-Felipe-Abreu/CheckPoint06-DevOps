@@ -1,6 +1,10 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/0LozK0wt)
 # CheckPoint 6: DevOps e CI/CD com Azure DevOps
 
+# Participantes
+Luiz Felipe Abreu - RM 555197
+Matheus Munuera - RM 557812
+
 ## Desafio
 
 Você faz parte do time de tecnologia responsável pelo **Projeto DimDim**, do banco DimDim, uma instituição financeira nacional com mais de 1 milhão de correntistas. O banco está passando por uma transformação digital para se tornar mais ágil, moderno e competitivo, melhorando a experiência de seus clientes nos canais digitais e físicos.
@@ -93,3 +97,4 @@ Abaixo estão imagens que comprovam a execução bem-sucedida do pipeline (build
 *Legenda:* Confirmação do deploy (WebApp/ACR) e recursos disponíveis após a execução do pipeline.
 
 > Observação: as imagens estão no diretório `img/` do repositório. Visualize o `README.md` no GitHub ou localmente no VS Code para ver as imagens renderizadas.
+
