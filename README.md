@@ -70,3 +70,26 @@ Sua avaliação será baseada em:
 
 - Para que o deploy seja considerado válido, ele deve ser realizado **pelo pipeline**. Deploy manual não será aceito como solução correta.
 - Inclua evidências da execução da pipeline (logs, prints do pipeline, logs do WebApp ou ACR) para comprovar que sua solução foi automatizada.
+
+---
+
+## Evidências do pipeline
+
+Abaixo estão imagens que comprovam a execução bem-sucedida do pipeline (build, testes e deploy).
+
+### 1) Status do pipeline
+![Pipeline - status](img/image.png)
+
+*Legenda:* Status geral da execução do pipeline indicando sucesso (Succeeded).
+
+### 2) Logs do build e testes
+![Build logs](img/image1.png)
+
+*Legenda:* Trecho dos logs do job de build e execução dos testes automatizados.
+
+### 3) Deploy e confirmação no Azure
+![Deploy e WebApp](img/image2.png)
+
+*Legenda:* Confirmação do deploy (WebApp/ACR) e recursos disponíveis após a execução do pipeline.
+
+> Observação: as imagens estão no diretório `img/` do repositório. Visualize o `README.md` no GitHub ou localmente no VS Code para ver as imagens renderizadas.
