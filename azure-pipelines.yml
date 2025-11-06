@@ -1,19 +1,81 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
-- main
+  - main
+
+variables:
+  imageName: 'transaction'
+  dockerfilePath: 'Dockerfile'
+  acrName: '2tds251cp6555197.azurecr.io'
+  webAppName: '2tds251cp6555197'
+  tag: '$(Build.BuildId)'
 
 pool:
-  vmImage: ubuntu-latest
+  vmImage: 'ubuntu-latest'
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+stages:
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+# ============================================================
+# 1) BUILD + TESTES (CI)
+# ============================================================
+- stage: Build
+  displayName: "Build e Testes da Aplicação"
+  jobs:
+    - job: BuildJob
+      steps:
+        - checkout: self
+
+        - task: Gradle@3
+          displayName: "Executando Build e Testes"
+          inputs:
+            gradleWrapperFile: 'gradlew'
+            tasks: 'clean build'
+            publishJUnitResults: true
+            testResultsFiles: '**/test-results/test/*.xml'
+
+# ============================================================
+# 2) DOCKER: BUILD + PUSH PARA ACR
+# ============================================================
+- stage: DockerImage
+  displayName: "Build e Push da Imagem Docker"
+  dependsOn: Build
+  jobs:
+    - job: DockerJob
+      steps:
+
+        - task: Docker@2
+          displayName: "Build e Push para ACR"
+          inputs:
+            containerRegistry: 'ACR-SC'
+            repository: '$(imageName)'
+            command: 'buildAndPush'
+            Dockerfile: '$(dockerfilePath)'
+            tags: |
+              latest
+              $(tag)
+
+# ============================================================
+# 3) DEPLOY NO AZURE WEBAPP
+# ============================================================
+- stage: Deploy
+  displayName: "Deploy Automático no Azure WebApp"
+  dependsOn: DockerImage
+  jobs:
+    - job: DeployJob
+      steps:
+
+        # Login no ACR (garante que o WebApp consiga puxar a imagem)
+        - task: AzureCLI@2
+          displayName: "Login no ACR"
+          inputs:
+            azureSubscription: 'Azure-RM-SC'
+            scriptType: bash
+            scriptLocation: inlineScript
+            inlineScript: |
+              az acr login --name 2tds251cp6555197
+
+        # Deploy da imagem no WebApp
+        - task: AzureWebAppContainer@1
+          displayName: "Deploy via Container no WebApp"
+          inputs:
+            azureSubscription: 'Azure-RM-SC'
+            appName: '$(webAppName)'
+            containers: '$(acrName)/$(imageName):latest'

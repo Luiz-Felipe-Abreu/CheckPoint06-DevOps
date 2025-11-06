@@ -1,6 +1,7 @@
 #!/bin/bash
+# NOTE: converted line endings to LF to avoid $'\r' errors on bash in Windows
 
-echo "Informe seu RM (rmXXXXX):"
+echo "Informe seu RM (555197):"
 read RM
 
 ACR_NAME="2tds251cp6${RM}"
@@ -53,6 +54,6 @@ az webapp config appsettings set \
   --resource-group "$RG" \
   --settings \
     WEBSITES_PORT=8080 \
-    DB_URL="jdbc:sqlserver://${SERVER_NAME}.database.windows.net:1433;database=${DBNAME};encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;" `
+    DB_URL="jdbc:sqlserver://${SERVER_NAME}.database.windows.net:1433;database=${DBNAME};encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;" \
     DB_USERNAME=$USERNAME \
     DB_PASSWORD="$PASSWORD"
