@@ -98,3 +98,4 @@ Abaixo estão imagens que comprovam a execução bem-sucedida do pipeline (build
 
 > Observação: as imagens estão no diretório `img/` do repositório. Visualize o `README.md` no GitHub ou localmente no VS Code para ver as imagens renderizadas.
 
+
